@@ -1,0 +1,5 @@
+pandas
+scikit-learn
+folium
+numpy<2.0.0
+pdfplumber

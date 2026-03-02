@@ -1,0 +1,16 @@
+#Python Files to ignore
+model.py
+preprocess.py
+visualize.py
+app.py
+
+#Virtual Environment
+venv/
+env/
+.venv/
+
+#Data Files
+crime_bahamas.csv
+
+#Html Files
+crime_map.html
