@@ -79,7 +79,7 @@ for filename in os.listdir(PDF_DIR):
                             "Divisional Breakdown",
                             "New Providence District",
                             "Person",
-                            "Property"
+                            "Property",
                         ]
                     ):
                         previous_text = ""  # Reset previous text when hitting a header

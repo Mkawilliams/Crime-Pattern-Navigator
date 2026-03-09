@@ -4,14 +4,26 @@ import pandas as pd
 df = pd.read_csv("data/processed_data/cleaned_np_crime_data.csv")
 
 division_columns = [
-    "A","CB","C","E","FH","NE","NW","PI","SC","SE","S","SW","W"
+    "A",
+    "CB",
+    "C",
+    "E",
+    "FH",
+    "NE",
+    "NW",
+    "PI",
+    "SC",
+    "SE",
+    "S",
+    "SW",
+    "W",
 ]
 
 long_df = df.melt(
     id_vars=["Offence", "Year"],
     value_vars=division_columns,
     var_name="division_code",
-    value_name="crime_count"
+    value_name="crime_count",
 )
 
 long_df = long_df[long_df["crime_count"] > 0]
