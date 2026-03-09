@@ -18,7 +18,7 @@ with open("geo/Police Subdivisions.geojson") as f:
     
 # Insert data into database
 for feature in data['features']:
-    name = feature['properties'].get('name', 'Unknown')
+    name = feature['properties'].get('Name', 'Unknown')
     geom = json.dumps(feature['geometry'])
     
     cur.execute("INSERT INTO subdivision (name, geom) VALUES (?, ?)", (name, geom))
