@@ -12,6 +12,6 @@ env/
 crime_bahamas.csv
 
 #Folders
-/raw_pdfs
+data/raw_pdfs
 
 
