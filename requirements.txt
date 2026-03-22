@@ -7,3 +7,5 @@ json
 sqllite3
 Point
 shapely
+dash
+dash.dependencies

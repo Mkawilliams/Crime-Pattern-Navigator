@@ -2,7 +2,6 @@
 model.py
 preprocess.py
 visualize.py
-app.py
 
 #Virtual Environment
 venv/
@@ -11,4 +10,8 @@ env/
 
 #Data Files
 crime_bahamas.csv
+
+#Folders
+/raw_pdfs
+
 
