@@ -89,7 +89,7 @@ app.layout = html.Div(
             style={
                 "position": "absolute",
                 "top": "20px",
-                "right": "200px",
+                "right": "20px",
                 "zIndex": 1000,
                 "background": "rgba(0,0,0,0.6)",
                 "color": "white",
@@ -139,21 +139,21 @@ def update_map(years, divisions, offences, map_style):
     )
 
     fig.update_layout(
-    margin={"r":0,"t":0,"l":0,"b":0},
-    uirevision="constant",
-
-    mapbox=dict(
-        center={"lat": 25.05, "lon": -77.35},
-        zoom=10
-    ),
-
-    coloraxis_colorbar=dict(
-        thickness=8,
-        len=0.35,
-        y=0.5
+        margin={"r": 0, "t": 0, "l": 0, "b": 0},
+        uirevision="constant",
+        mapbox=dict(bearing=0, pitch=0),
+        coloraxis_colorbar=dict(
+            title=" ",
+            orientation="h",
+            tickfont=dict(color="red"),
+            thickness=8,
+            len=0.35,
+            y=0.1,
+            yanchor="bottom",
+            x=0.5,
+        ),
     )
-)
-    
+
     return fig
 
 
