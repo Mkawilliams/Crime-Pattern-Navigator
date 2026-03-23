@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-from dash import Dash, dcc, html
+from dash import Dash, dash_table, dcc, html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import json
@@ -98,8 +98,56 @@ app.layout = html.Div(
                 "fontWeight": "bold",
             },
         ),
+        # Right corner copyright notice
+        html.Div(
+            "©️ 2026 Matthew Williams. All rights reserved.",
+            style={
+                "position": "absolute",
+                "bottom": "10px",
+                "right": "20px",
+                "color": "white",
+                "background": "rgba(0,0,0,0.6)",
+                "padding": "5px 10px",
+                "borderRadius": "8px",
+                "fontSize": "12px",
+            },
+        ),
+        dash_table.DataTable(
+            id="comparison_table",
+            columns=[],
+            data=[],
+            style_table={
+                "position": "absolute",
+                "top": "120px",
+                "right": "20px",
+                "width": "300px",
+                "maxHeight": "80vh",
+                "overflowY": "auto",
+            },
+            style_cell={
+                "backgroundColor": "rgba(255,255,255,0.8)",
+                "color": "black",
+                "textAlign": "left",
+                "padding": "5px",
+                "fontFamily": "Arial, sans-serif",
+            },
+            style_header={
+                "backgroundColor": "#111",
+                "color": "white",
+                "fontWeight": "bold",
+            },
+        ),
     ]
 )
+
+
+# Look up division names for hover info
+division_lookup = {
+    feature["properties"]["Code"]: feature["properties"]["Name"]
+    for feature in geojson["features"]
+}
+
+df["division_name"] = df["division_code"].map(division_lookup)
 
 
 # Callback to update the map based on filters
