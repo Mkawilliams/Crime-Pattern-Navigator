@@ -1,6 +1,6 @@
 import sqlite3
 import pandas as pd
-from dash import Dash, dash_table, dcc, html
+from dash import Dash, ctx, dash_table, dcc, html
 from dash.dependencies import Input, Output
 import plotly.express as px
 import json
@@ -14,6 +14,12 @@ df = pd.read_sql_query("SELECT * FROM crime_data", conn)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 with open(os.path.join(BASE_DIR, "geo", "police_subdivisions.geojson")) as f:
     geojson = json.load(f)
+
+# Look up division names for hover info
+division_lookup = {
+    feature["properties"]["Code"]: feature["properties"]["Name"]
+    for feature in geojson["features"]
+}
 
 # Initialize Dash app
 app = Dash(__name__)
@@ -44,8 +50,8 @@ app.layout = html.Div(
                 dcc.Dropdown(
                     id="division_filter",
                     options=[
-                        {"label": d, "value": d}
-                        for d in sorted(df["division_code"].unique())
+                        {"label": division_lookup.get(code, code), "value": code}
+                        for code in sorted(df["division_code"].unique())
                     ],
                     multi=True,
                     placeholder="Division",
@@ -71,7 +77,7 @@ app.layout = html.Div(
             ],
             style={
                 "position": "absolute",
-                "top": "20px",
+                "top": "40px",
                 "left": "20px",
                 "zIndex": 1000,
                 "background": "rgba(0,0,0,0.6)",
@@ -88,7 +94,7 @@ app.layout = html.Div(
             "Bahamas Crime Intelligence Map",
             style={
                 "position": "absolute",
-                "top": "20px",
+                "top": "40px",
                 "right": "20px",
                 "zIndex": 1000,
                 "background": "rgba(0,0,0,0.6)",
@@ -110,6 +116,21 @@ app.layout = html.Div(
                 "padding": "5px 10px",
                 "borderRadius": "8px",
                 "fontSize": "12px",
+            },
+        ),
+        html.Div(
+            "Disclaimer: This map is for research and educational purposes only. It is not an official government product. Data is sourced from public RBPF's reports.",
+            style={
+                "position": "absolute",
+                "top": "0",
+                "left": "0",
+                "width": "100%",
+                "background": "rgba(255,0,0,0.8)",
+                "color": "white",
+                "padding": "10px",
+                "textAlign": "center",
+                "fontWeight": "bold",
+                "zIndex": 2000,
             },
         ),
         dash_table.DataTable(
@@ -141,12 +162,6 @@ app.layout = html.Div(
 )
 
 
-# Look up division names for hover info
-division_lookup = {
-    feature["properties"]["Code"]: feature["properties"]["Name"]
-    for feature in geojson["features"]
-}
-
 df["division_name"] = df["division_code"].map(division_lookup)
 
 
@@ -171,7 +186,11 @@ def update_map(years, divisions, offences, map_style):
     if offences:
         filtered = filtered[filtered["Offence"].isin(offences)]
 
-    grouped = filtered.groupby("division_code")["crime_count"].sum().reset_index()
+    grouped = (
+        filtered.groupby(["division_code", "division_name"])["crime_count"]
+        .sum()
+        .reset_index()
+    )
 
     fig = px.choropleth_mapbox(
         grouped,
@@ -180,9 +199,12 @@ def update_map(years, divisions, offences, map_style):
         featureidkey="properties.Code",
         color="crime_count",
         color_continuous_scale="Reds",
+        hover_name="division_name",
+        hover_data={"crime_count": True, "division_code": False},
+        custom_data=["division_code"],
         mapbox_style=map_style,
         center={"lat": 25.05, "lon": -77.35},
-        zoom=10,
+        zoom=9,
         opacity=0.75,
     )
 
@@ -201,9 +223,48 @@ def update_map(years, divisions, offences, map_style):
             x=0.5,
         ),
     )
-
+    fig.update_traces(hovertemplate="<b>%{hovertext}</b><br>%{z}<extra></extra>")
     return fig
 
 
+# Callback to update the comparison table based on filters & Clicked division
+@app.callback(
+    Output("comparison_table", "columns"),
+    Output("comparison_table", "data"),
+    Input("year_filter", "value"),
+    Input("division_filter", "value"),
+    Input("offence_filter", "value"),
+    Input("crime_map", "clickData"),
+)
+
+# This callback generates a summary table of crime counts by year, division, and offence based on the current filters. It groups the data and formats it for display in the DataTable.
+def update_table(years, divisions, offences, clickData):
+    dff = df.copy()
+    if years:
+        dff = dff[dff["Year"].isin(years)]
+    if divisions:
+        dff = dff[dff["division_code"].isin(divisions)]
+    if offences:
+        dff = dff[dff["Offence"].isin(offences)]
+
+    dff["division_name"] = dff["division_code"].map(division_lookup)
+
+    triggered = [t["prop_id"] for t in ctx.triggered]
+    if "crime_map.clickData" in triggered and clickData:
+        division_code = clickData["points"][0]["customdata"][0]
+        dff = dff[dff["division_code"] == division_code]
+
+    summary = (
+        dff.groupby(["Year", "division_name", "Offence"])
+        .size()
+        .reset_index(name="Crime Count")
+    )
+
+    columns = [{"name": col, "id": col} for col in summary.columns]
+    data = summary.to_dict("records")
+    return columns, data
+
+
+# Run the app
 if __name__ == "__main__":
     app.run(debug=True)
