@@ -1,0 +1,81 @@
+/* Desktop defaults */
+.disclaimer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2000;
+}
+
+.title-overlay {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  z-index: 1500;
+}
+
+.filters {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  width: 260px;
+  z-index: 1500;
+}
+
+.summary-table {
+  position: absolute;
+  bottom: 140px;
+  right: 20px;
+  width: 25%;
+  z-index: 1500;
+}
+
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .disclaimer {
+    position: relative !important;
+    width: 100% !important;
+    margin-bottom: 10px; /* add spacing below disclaimer */
+    text-align: center; /* center text on mobile */
+    white-space: normal; /* allow text to wrap */
+    font-size: 14px; /* adjust font size for mobile */
+    line-height: 1.4; /* improve readability on mobile */
+    padding: 8px; /* add padding for better touch targets */
+    z-index: auto!important; /* reset z-index for mobile */
+    }
+
+ .title-overlay {
+    position: relative !important;
+    width: 100% !important;
+    margin-bottom: 10px;
+    text-align: center;
+    margin:10px 0;
+    z-index: auto!important;
+  }
+
+  .filters {
+    position: relative !important;
+    width: 100% !important;
+    margin: 10px 0;
+  }
+
+  .crime-map {
+    position: relative !important;
+    width: 100% !important;
+    height: 60vh !important;
+    margin: 10px 0;
+    z-index: auto!important;
+  }
+
+.summary-table {
+    position: absolute !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 400px; /* cap height */
+    margin-top: 20px;
+    overflow-y: auto; /* allow vertical scroll on mobile */
+    z-index: auto!important;
+  }
+
+}

@@ -1,10 +1,11 @@
 import sqlite3
 import pandas as pd
-from dash import Dash, ctx, dash_table, dcc, html
-from dash.dependencies import Input, Output
 import plotly.express as px
 import json
 import os
+import plotly.graph_objects as go
+from dash import Dash, ctx, dcc, html
+from dash.dependencies import Input, Output
 
 # Load crime data from SQLite database
 conn = sqlite3.connect("crime.db")
@@ -24,16 +25,21 @@ division_lookup = {
 # Initialize Dash app
 app = Dash(__name__)
 
+# Define app layout with map and filters
 app.layout = html.Div(
     [
         # Fullscreen Map
-        dcc.Graph(
-            id="crime_map",
-            style={"height": "100vh"},
-            config={
-                "displayModeBar": False,
-                "scrollZoom": True,
-            },
+        html.Div(
+            dcc.Graph(
+                id="crime_map",
+                className="crime-map",
+                style={"height": "100vh"},
+                config={
+                    "displayModeBar": False,
+                    "scrollZoom": True,
+                },
+            ),
+            style={"position": "relative", "zIndex": 1},
         ),
         # Overlay Filters
         html.Div(
@@ -75,6 +81,7 @@ app.layout = html.Div(
                     style={"marginTop": "10px"},
                 ),
             ],
+            className="filters",
             style={
                 "position": "absolute",
                 "top": "40px",
@@ -92,6 +99,7 @@ app.layout = html.Div(
         # Title Overlay
         html.Div(
             "Bahamas Crime Intelligence Map",
+            className="title-overlay",
             style={
                 "position": "absolute",
                 "top": "40px",
@@ -108,7 +116,7 @@ app.layout = html.Div(
         html.Div(
             "©️ 2026 Matthew Williams. All rights reserved.",
             style={
-                "position": "absolute",
+                "position": "fixed",
                 "bottom": "10px",
                 "right": "20px",
                 "color": "white",
@@ -116,10 +124,13 @@ app.layout = html.Div(
                 "padding": "5px 10px",
                 "borderRadius": "8px",
                 "fontSize": "12px",
+                "zIndex": 3000,
             },
         ),
+        # Disclaimer banner
         html.Div(
             "Disclaimer: This map is for research and educational purposes only. It is not an official government product. Data is sourced from public RBPF's reports.",
+            className="disclaimer",
             style={
                 "position": "absolute",
                 "top": "0",
@@ -133,29 +144,21 @@ app.layout = html.Div(
                 "zIndex": 2000,
             },
         ),
-        dash_table.DataTable(
-            id="comparison_table",
-            columns=[],
-            data=[],
-            style_table={
+        # Summary Table Overlay
+        dcc.Graph(
+            id="summary_table",
+            className="summary-table",
+            style={
                 "position": "absolute",
-                "top": "120px",
+                "bottom": "140px",
                 "right": "20px",
-                "width": "300px",
-                "maxHeight": "80vh",
+                "zIndex": 1000,
+                "background": "rgba(0,0,0,0.6)",
+                "padding": "10px",
+                "width": "25%",
+                "borderRadius": "8px",
                 "overflowY": "auto",
-            },
-            style_cell={
-                "backgroundColor": "rgba(255,255,255,0.8)",
-                "color": "black",
-                "textAlign": "left",
-                "padding": "5px",
-                "fontFamily": "Arial, sans-serif",
-            },
-            style_header={
-                "backgroundColor": "#111",
-                "color": "white",
-                "fontWeight": "bold",
+                "opacity": 0.9,
             },
         ),
     ]
@@ -229,8 +232,7 @@ def update_map(years, divisions, offences, map_style):
 
 # Callback to update the comparison table based on filters & Clicked division
 @app.callback(
-    Output("comparison_table", "columns"),
-    Output("comparison_table", "data"),
+    Output("summary_table", "figure"),
     Input("year_filter", "value"),
     Input("division_filter", "value"),
     Input("offence_filter", "value"),
@@ -254,15 +256,55 @@ def update_table(years, divisions, offences, clickData):
         division_code = clickData["points"][0]["customdata"][0]
         dff = dff[dff["division_code"] == division_code]
 
+    # Group and summarize data for the table
     summary = (
         dff.groupby(["Year", "division_name", "Offence"])
-        .size()
-        .reset_index(name="Crime Count")
+        .sum()
+        .reset_index()
+        .rename(columns={"division_name": "Division", "crime_count": "Crime Count"})
+    )
+    
+    # Dynamic height calculation based on number of rows (max 10 rows visible without scroll)
+    row_height = 15
+    base_height = 35  
+    total_height = min(len(summary) * row_height + base_height, 400)  # Max height of 400px
+
+    # Build Plotly table
+    fig = go.Figure(
+        data=[
+            go.Table(
+                header=dict(
+                    values=[
+                        "Year",
+                        "Division",
+                        "Offence",
+                        "Crime Count",
+                    ],
+                    fill_color="lightgrey",
+                    font=dict(color="black", size=10),
+                    align="center",
+                ),
+                cells=dict(
+                    values=[
+                        summary["Year"],
+                        summary["Division"],
+                        summary["Offence"],
+                        summary["Crime Count"],
+                    ],
+                    font=dict(color="black", size=9),
+                    fill_color="lightgrey",
+                    align="left",
+                ),
+            )
+        ]
     )
 
-    columns = [{"name": col, "id": col} for col in summary.columns]
-    data = summary.to_dict("records")
-    return columns, data
+    fig.update_layout(
+        margin={"r": 0, "t": 0, "l": 0, "b": 0},
+        height=total_height,
+    )
+
+    return fig
 
 
 # Run the app
