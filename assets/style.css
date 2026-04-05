@@ -1,81 +1,146 @@
-/* Desktop defaults */
+/*Desktop defaults */
+
+/*App container */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/*Disclaimer banner (desktop: pinned to top) */
 .disclaimer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 2000;
+  background: rgba(255, 0, 0, 0.85);
+  color: #fff;
+  padding: 10px 12px;
+  text-align: center;
+  font-weight: 700;
+  box-sizing: border-box;
 }
 
+/*Title overlay (desktop: top-right) */
 .title-overlay {
   position: absolute;
   top: 40px;
   right: 20px;
   z-index: 1500;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: 700;
 }
 
+/*Filters (desktop: top-left floating panel) */
 .filters {
   position: absolute;
   top: 40px;
   left: 20px;
   width: 260px;
   z-index: 1500;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
+  opacity: 0.95;
 }
 
-.summary-table {
+/*Map wrapper and default map sizing (desktop: full viewport height) */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+/*Crime map */
+.crime-map,
+#crime_map {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/*Summary table overlay (desktop: bottom-right) */
+.summary-table,
+#summary_table {
   position: absolute;
   bottom: 140px;
   right: 20px;
   width: 25%;
   z-index: 1500;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  max-height: 60vh;
 }
 
+/*Copyright (desktop pinned) */
+.copyright {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  z-index: 3000;
+}
 
-/* Mobile adjustments */
-@media (max-width: 600px) {
-    .disclaimer {
-    position: relative !important;
-    width: 100% !important;
-    margin-bottom: 10px; /* add spacing below disclaimer */
-    text-align: center; /* center text on mobile */
-    white-space: normal; /* allow text to wrap */
-    font-size: 14px; /* adjust font size for mobile */
-    line-height: 1.4; /* improve readability on mobile */
-    padding: 8px; /* add padding for better touch targets */
-    z-index: auto!important; /* reset z-index for mobile */
-    }
+/*Mobile and tablet overrides */
 
- .title-overlay {
-    position: relative !important;
+/* Larger breakpoint for tablets too */
+@media (max-width: 900px) {
+  .app-container {
+    display: flex !important;
+    flex-direction: column !important;
     width: 100% !important;
-    margin-bottom: 10px;
-    text-align: center;
-    margin:10px 0;
-    z-index: auto!important;
+    min-height: 100dvh !important;
   }
 
+  .disclaimer,
+  .title-overlay,
   .filters {
     position: relative !important;
     width: 100% !important;
-    margin: 10px 0;
+    margin: 6px 0 !important;
+    text-align: center !important;
   }
 
-  .crime-map {
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .crime-map,
+  #crime_map {
+    width: 100% !important;
+    height: 60dvh !important;
+  }
+
+  .summary-table,
+  #summary_table {
+    width: 100% !important;
+    max-height: 30dvh !important;
+    overflow-y: auto !important;
+    margin-top: 8px !important;
+  }
+
+  .copyright {
     position: relative !important;
     width: 100% !important;
-    height: 60vh !important;
-    margin: 10px 0;
-    z-index: auto!important;
+    text-align: center !important;
+    margin-top: auto !important;
   }
-
-.summary-table {
-    position: absolute !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: 400px; /* cap height */
-    margin-top: 20px;
-    overflow-y: auto; /* allow vertical scroll on mobile */
-    z-index: auto!important;
-  }
-
 }

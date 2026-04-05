@@ -27,19 +27,33 @@ app = Dash(__name__)
 
 # Define app layout with map and filters
 app.layout = html.Div(
-    [
-        # Fullscreen Map
+    className="app-container",
+    children=[
+        # Disclaimer banner
         html.Div(
-            dcc.Graph(
-                id="crime_map",
-                className="crime-map",
-                style={"height": "100vh"},
-                config={
-                    "displayModeBar": False,
-                    "scrollZoom": True,
-                },
-            ),
-            style={"position": "relative", "zIndex": 1},
+            "Disclaimer: This map is for research and educational purposes only. It is not an official government product. Data is sourced from public RBPF's reports.",
+            className="disclaimer",
+            style={
+                "background": "rgba(255,0,0,0.8)",
+                "color": "white",
+                "padding": "10px",
+                "textAlign": "center",
+                "fontWeight": "bold",
+                "boxSizing": "border-box",
+            },
+        ),
+        # Title Overlay
+        html.Div(
+            "Bahamas Crime Intelligence Map",
+            className="title-overlay",
+            style={
+                "background": "rgba(0,0,0,0.6)",
+                "color": "white",
+                "padding": "10px 15px",
+                "borderRadius": "8px",
+                "fontWeight": "bold",
+                "boxSizing": "border-box",
+            },
         ),
         # Overlay Filters
         html.Div(
@@ -52,6 +66,7 @@ app.layout = html.Div(
                     value=[df["Year"].max()],
                     multi=True,
                     placeholder="Year",
+                    clearable=False,
                 ),
                 dcc.Dropdown(
                     id="division_filter",
@@ -61,6 +76,8 @@ app.layout = html.Div(
                     ],
                     multi=True,
                     placeholder="Division",
+                    clearable=False,
+                    style={"marginTop": "8px"},
                 ),
                 dcc.Dropdown(
                     id="offence_filter",
@@ -69,6 +86,8 @@ app.layout = html.Div(
                     ],
                     multi=True,
                     placeholder="Offence",
+                    clearable=True,
+                    style={"marginTop": "8px"},
                 ),
                 # Map style toggle
                 dcc.RadioItems(
@@ -79,6 +98,7 @@ app.layout = html.Div(
                     ],
                     value="carto-positron",
                     style={"marginTop": "10px"},
+                    inputStyle={"marginRight": "5px"},
                 ),
             ],
             className="filters",
@@ -94,74 +114,62 @@ app.layout = html.Div(
                 "width": "260px",
                 "boxShadow": "0 8px 20px rgba(0,0,0,0.4)",
                 "opacity": 0.5,
+                "boxSizing": "border-box",
             },
         ),
-        # Title Overlay
+        # Fullscreen Map
         html.Div(
-            "Bahamas Crime Intelligence Map",
-            className="title-overlay",
-            style={
-                "position": "absolute",
-                "top": "40px",
-                "right": "20px",
-                "zIndex": 1000,
-                "background": "rgba(0,0,0,0.6)",
-                "color": "white",
-                "padding": "10px 15px",
-                "borderRadius": "8px",
-                "fontWeight": "bold",
-            },
-        ),
-        # Right corner copyright notice
-        html.Div(
-            "©️ 2026 Matthew Williams. All rights reserved.",
-            style={
-                "position": "fixed",
-                "bottom": "10px",
-                "right": "20px",
-                "color": "white",
-                "background": "rgba(0,0,0,0.6)",
-                "padding": "5px 10px",
-                "borderRadius": "8px",
-                "fontSize": "12px",
-                "zIndex": 3000,
-            },
-        ),
-        # Disclaimer banner
-        html.Div(
-            "Disclaimer: This map is for research and educational purposes only. It is not an official government product. Data is sourced from public RBPF's reports.",
-            className="disclaimer",
-            style={
-                "position": "absolute",
-                "top": "0",
-                "left": "0",
-                "width": "100%",
-                "background": "rgba(255,0,0,0.8)",
-                "color": "white",
-                "padding": "10px",
-                "textAlign": "center",
-                "fontWeight": "bold",
-                "zIndex": 2000,
-            },
+            dcc.Graph(
+                id="crime_map",
+                className="crime-map",
+                style={"height": "100vh"},
+                config={
+                    "displayModeBar": False,
+                    "scrollZoom": True,
+                },
+            ),
+            className="map-wrapper",
+            style={"position": "relative", "width": "100%", "height": "100vh"},
         ),
         # Summary Table Overlay
-        dcc.Graph(
-            id="summary_table",
-            className="summary-table",
-            style={
-                "position": "absolute",
-                "bottom": "140px",
-                "right": "20px",
-                "zIndex": 1000,
-                "background": "rgba(0,0,0,0.6)",
-                "padding": "10px",
-                "width": "25%",
-                "borderRadius": "8px",
-                "overflowY": "auto",
-                "opacity": 0.9,
-            },
+        html.Div(
+            children=[
+                dcc.Graph(
+                    id="summary_table",
+                    className="summary-table",
+                    style={
+                        "position": "absolute",
+                        "bottom": "140px",
+                        "right": "20px",
+                        "zIndex": 1000,
+                        "background": "rgba(0,0,0,0.6)",
+                        "padding": "10px",
+                        "width": "25%",
+                        "borderRadius": "8px",
+                        "overflowY": "auto",
+                        "opacity": 0.9,
+                        "boxSizing": "border-box",
+                    },
+                ),
+                # Right corner copyright notice
+                html.Div(
+                    "©️ 2026 Matthew Williams. All rights reserved.",
+                    style={
+                        "position": "fixed",
+                        "bottom": "10px",
+                        "right": "20px",
+                        "color": "white",
+                        "background": "rgba(0,0,0,0.6)",
+                        "padding": "5px 10px",
+                        "borderRadius": "8px",
+                        "fontSize": "12px",
+                        "zIndex": 3000,
+                    },
+                ),
+            ],
+            className="table-wrapper",
         ),
-    ]
+    ],
 )
 
 
@@ -263,11 +271,13 @@ def update_table(years, divisions, offences, clickData):
         .reset_index()
         .rename(columns={"division_name": "Division", "crime_count": "Crime Count"})
     )
-    
+
     # Dynamic height calculation based on number of rows (max 10 rows visible without scroll)
     row_height = 15
-    base_height = 35  
-    total_height = min(len(summary) * row_height + base_height, 400)  # Max height of 400px
+    base_height = 35
+    total_height = min(
+        len(summary) * row_height + base_height, 400
+    )  # Max height of 400px
 
     # Build Plotly table
     fig = go.Figure(

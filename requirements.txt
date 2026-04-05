@@ -1,4 +1,6 @@
 pandas
+fastapi
+uvicorn
 scikit-learn
 folium
 numpy<2.0.0
