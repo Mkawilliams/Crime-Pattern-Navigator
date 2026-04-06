@@ -18,7 +18,7 @@ GROUP BY division_code
 )
 
 # load polygons
-with open("geo/Police Subdivisions.geojson") as f:
+with open("backend/geo/Police Subdivisions.geojson") as f:
     geo = json.load(f)
 
 # create map

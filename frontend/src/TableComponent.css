@@ -1,0 +1,31 @@
+.table-wrapper {
+  margin-bottom: 3%;
+  max-height: 400px;       /* scrollable height */
+  overflow-y: auto;        /* enables scrolling */
+}
+
+.table-wrapper::-webkit-scrollbar {
+  display: none;             /* scrollbar width */
+}
+
+.table-data {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-data th {
+  position: sticky;        /* lock headers */
+  top: 0;                  /* stick to top */
+  background: #222;        /* dark background */
+  color: #fff;             /* header text color */
+  padding: 8px;
+  text-align: left;
+  z-index: 2;              /* ensure header stays above rows */
+}
+
+.table-data td {
+  padding: 8px;
+  height: 40px;            /* row height */
+  border-bottom: 1px solid #444;
+  color: #ddd;
+}

@@ -12,6 +12,27 @@ env/
 crime_bahamas.csv
 
 #Folders
-data/raw_pdfs
+backend/data/raw_pdfs
+frontend/node_modules
 
+#Dependencies
+/node_modules
+/.pnp
+.pnp.js
 
+#Testing
+/coverage
+
+#Production
+/build
+
+#Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

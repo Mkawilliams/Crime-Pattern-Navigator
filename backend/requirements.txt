@@ -1,13 +1,9 @@
-pandas
 fastapi
-uvicorn
+uvicorn[standard]
+pandas
 scikit-learn
 folium
 numpy<2.0.0
 pdfplumber
-json
-sqllite3
-Point
 shapely
 dash
-dash.dependencies

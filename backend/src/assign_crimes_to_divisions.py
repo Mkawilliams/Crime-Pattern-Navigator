@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
 
-df = pd.read_csv("data/processed_data/cleaned_np_crime_data.csv")
+df = pd.read_csv("backend/data/processed_data/cleaned_np_crime_data.csv")
 
 division_columns = [
     "A",

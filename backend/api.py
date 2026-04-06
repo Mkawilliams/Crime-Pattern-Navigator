@@ -23,6 +23,10 @@ division_lookup = {
 }
 df["division_name"] = df["division_code"].map(division_lookup)
 
+#Opening Message
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Bahamas Crime Data API!"}
 
 # Filter Options
 @app.get("/filters")
@@ -61,13 +65,16 @@ def get_table_data(
     divisions: list[str] = Query(None),
     offences: list[str] = Query(None),
 ):
+    print("Filters received:", years, divisions, offences)
+
+
     filtered = df.copy()
     if years:
-        filtered = filtered[filtered["year"].isin(years)]
+        filtered = filtered[filtered["Year"].isin(years)]
     if divisions:
-        filtered = filtered[filtered["division"].isin(divisions)]
+        filtered = filtered[filtered["division_name"].isin(divisions)]
     if offences:
-        filtered = filtered[filtered["offence"].isin(offences)]
+        filtered = filtered[filtered["Offence"].isin(offences)]
 
     # Group for Table
     grouped = (

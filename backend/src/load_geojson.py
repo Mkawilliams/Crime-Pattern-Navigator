@@ -13,7 +13,7 @@ cur.execute("""CREATE TABLE subdivision (
 )""")
 
 # Load GeoJSON data
-with open("geo/Police Subdivisions.geojson") as f:
+with open("backend/geo/Police Subdivisions.geojson") as f:
     data = json.load(f)
 
 # Insert data into database

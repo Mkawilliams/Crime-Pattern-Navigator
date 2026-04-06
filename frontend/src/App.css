@@ -1,0 +1,160 @@
+/* Desktop layout */
+@media (min-width: 768px) {
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+.app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Disclaimer banner */
+.disclaimer {
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255,0,0,0.8);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  z-index: 2000;
+  box-sizing: border-box;
+}
+
+/* Title overlay */
+.title-overlay {
+  position: fixed;
+  top: 6%;
+  left: 40%;
+  width: 20%;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  z-index: 2000;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Filters panel */
+.filters {
+  display: table-column;
+  position: fixed;
+  top: 35%;
+  left: 0px;
+  width: 10%;
+  height: 10%;
+  z-index: 1000;
+  color: red;
+  text-align: center;
+  opacity: 0.7;
+  box-sizing: border-box;
+}
+
+/*Switch input */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #444;
+  transition: .4s;
+  border-radius: 26px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px; width: 20px;
+  left: 3px; bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+/* Map wrapper */
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.crime-map {
+  height: 100%;
+  width: 100%;
+}
+
+/* Summary table overlay */
+.summary-table {
+  position: absolute;
+  bottom: 15%;
+  right: 1%;
+  height: 80%;
+  width: 40%;
+  z-index: 1000;
+  color: white;
+  padding: 10px;
+  width: 25%;
+  border-radius: 8px;
+  overflow-y: auto;
+  opacity: 0.9;
+  box-sizing: border-box;
+}
+
+/* Copyright notice */
+.table-wrapper div:last-child {
+  position: fixed;
+  bottom: 2.5%;
+  right: 0px;
+  color: white;
+  background: rgba(0,0,0,0.6);
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  z-index: 3000;
+}
+
+
+/* Mobile layout */
+@media (max-width: 767px) {
+  .filters {
+    display: block;
+    text-align: center;
+  }
+
+  .filters select {
+    display: block;
+    margin: 8px auto;
+    width: 90%;
+  }
+}
