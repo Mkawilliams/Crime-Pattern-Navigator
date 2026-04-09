@@ -1,44 +1,51 @@
 import React from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import Legend from "./Legend";
 
-function MapComponent({ geojson, mapTheme, crimeData }) {
-  // Click handler for each division
-  const onEachDivision = (feature, layer) => {
-    layer.on({
-      click: () => {
-        alert(`Clicked division: ${feature.properties.Name}`);
-      }
-    });
+// Map Function
+function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
+  const getColor = (count, maxCount) => {
+    const ratio = maxCount > 0 ? count / maxCount : 0;
+    const hue = 60 - (60 * ratio); // yellow → red
+    return `hsl(${hue}, 100%, 50%)`;
   };
 
-  // Style divisions based on crime count
+  // Style
   const styleDivision = (feature) => {
-    const divisionName = feature.properties.Name  // adjust based on your GeoJSON
+    const divisionName = feature.properties.Name;
     const crimeCount = crimeData[divisionName] || 0;
+    const maxCount = Math.max(...Object.values(crimeData));
 
     return {
-      fillColor: getColor(crimeCount),
+      fillColor: getColor(crimeCount, maxCount),
       weight: 1,
       opacity: 1,
-      color: "#333",
+      color: "white",
+      dashArray: "3",
       fillOpacity: 0.7
     };
   };
 
-  const getColor = (count) => {
-    return count > 200 ? "#800026" :
-           count > 100 ? "#BD0026" :
-           count > 50  ? "#E31A1C" :
-           count > 20  ? "#FC4E2A" :
-           count > 10  ? "#FD8D3C" :
-           count > 0   ? "#FEB24C" :
-                         "#FFEDA0";
+  // Division Clicks
+  const onEachDivision = (feature, layer) => {
+    const divisionName = feature.properties.Name;
+    const crimeCount = crimeData[divisionName] || 0;
+
+    layer.bindTooltip(`${divisionName}<br/>Crimes: ${crimeCount}`, { sticky: true });
+
+    layer.on({
+      click: () => {
+        if (onDivisionClick) {
+          onDivisionClick(divisionName);
+        }
+      }
+    });
   };
 
   return (
     <MapContainer
-      center={[25.0343, -77.3963]} // Nassau coords
+      center={[25.0343, -77.3963]}
       zoom={11}
       style={{ height: "100%", width: "100%" }}
       scrollWheelZoom={true}
@@ -53,11 +60,13 @@ function MapComponent({ geojson, mapTheme, crimeData }) {
       />
       {geojson && (
         <GeoJSON
+          key={JSON.stringify(crimeData)}
           data={geojson}
           style={styleDivision}
           onEachFeature={onEachDivision}
         />
       )}
+      <Legend crimeData={crimeData} />
     </MapContainer>
   );
 }
