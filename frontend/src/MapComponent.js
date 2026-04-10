@@ -1,17 +1,30 @@
 import React from "react";
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMapEvents } from "react-leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Legend from "./Legend";
 
-// Map Function
+//Map click handler MUST be outside
+function MapClickHandler({ onDivisionClick }) {
+  useMapEvents({
+    click: () => {
+      console.log("Map clicked");
+      onDivisionClick(null);
+    }
+  });
+  return null;
+}
+
+//Map Function
 function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
+
   const getColor = (count, maxCount) => {
     const ratio = maxCount > 0 ? count / maxCount : 0;
-    const hue = 60 - (60 * ratio); // yellow → red
+    const hue = 60 - (60 * ratio);
     return `hsl(${hue}, 100%, 50%)`;
   };
 
-  // Style
+  //Style
   const styleDivision = (feature) => {
     const divisionName = feature.properties.Name;
     const crimeCount = crimeData[divisionName] || 0;
@@ -27,7 +40,7 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
     };
   };
 
-  // Division Clicks
+  //Division Clicks
   const onEachDivision = (feature, layer) => {
     const divisionName = feature.properties.Name;
     const crimeCount = crimeData[divisionName] || 0;
@@ -35,10 +48,9 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
     layer.bindTooltip(`${divisionName}<br/>Crimes: ${crimeCount}`, { sticky: true });
 
     layer.on({
-      click: () => {
-        if (onDivisionClick) {
-          onDivisionClick(divisionName);
-        }
+      click: (e) => {
+        L.DomEvent.stopPropagation(e);
+        onDivisionClick(divisionName);
       }
     });
   };
@@ -51,6 +63,9 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
       scrollWheelZoom={true}
       zoomControl={false}
     >
+      {/* Map Click Hanler*/}
+      <MapClickHandler onDivisionClick={onDivisionClick} />
+
       <TileLayer
         url={
           mapTheme === "dark"
@@ -58,6 +73,7 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
             : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         }
       />
+
       {geojson && (
         <GeoJSON
           key={JSON.stringify(crimeData)}
@@ -66,6 +82,7 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
           onEachFeature={onEachDivision}
         />
       )}
+
       <Legend crimeData={crimeData} />
     </MapContainer>
   );

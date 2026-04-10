@@ -13,8 +13,8 @@ function App() {
   const [selectedDivisions, setSelectedDivisions] = useState([]);
   const [selectedOffences, setSelectedOffences] = useState([]);
   const [mapTheme, setMapTheme] = useState("light");
-  const[geojson, setGeojson] = useState(null);
-  const[clickedDivision, setClickedDivision] = useState(null);
+  const [geojson, setGeojson] = useState(null);
+  const [clickedDivision, setClickedDivision] = useState(null);
 
   // Load filter options
 useEffect(() => {
@@ -60,11 +60,18 @@ const crimeData = Array.isArray(tableData)
     }, {})
   : {};
 
-// Filter Rows
-const filteredRows = clickedDivision
-  ? tableData.filter(row => row.division_name === clickedDivision)
-  : tableData;
+    // Filter table data based on clicked division
+  const filteredRows = tableData.filter(row => {
+  const matchesClick = clickedDivision 
+    ? row.division_name === clickedDivision 
+    : true;
 
+  const matchesDropdown = selectedDivisions.length
+    ? selectedDivisions.includes(row.division_name)
+    : true;
+
+  return matchesClick && matchesDropdown;
+    });
 
 
   return (
@@ -96,7 +103,12 @@ const filteredRows = clickedDivision
 
       {/* Map wrapper */}
       <div className="map-wrapper">
-        <MapComponent geojson={geojson} mapTheme={mapTheme} crimeData={crimeData} onDivisionClick={setClickedDivision} />
+        <MapComponent 
+        geojson={geojson} 
+        mapTheme={mapTheme} 
+        crimeData={crimeData} 
+        onDivisionClick={setClickedDivision} 
+        selectedDivision={clickedDivision} />
       </div>
 
       {/* Summary table overlay */}

@@ -1,5 +1,5 @@
 import React from "react";
-import "./TableComponent.css";
+import "./App.css";
 
 function TableComponent({ rows }) {
   if (!rows || rows.length === 0) {
