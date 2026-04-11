@@ -190,7 +190,7 @@ input:checked + .slider:before {
   border-bottom: none;
   color: #fff;
   padding: 8px;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 /*Legend*/
@@ -383,6 +383,11 @@ input:checked + .slider:before {
     color: #ddd;
     font-size: 12px;           /* smaller cell font */
   }
+
+  /*Footer styling*/
+.table-data tfoot td {
+  font-size: 14px;
+}
 
   /* Legend shrink */
   .legend {
