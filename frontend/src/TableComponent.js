@@ -6,15 +6,18 @@ function TableComponent({ rows }) {
     return <p style={{ color: "white" }}>No data available.</p>;
   }
 
+  //Calculate total count for footer
+  const totalCount = rows.reduce((sum, row) => sum + row.crime_count, 0);
+
   return (
     <div className="table-wrapper">
       <table className="table-data">
         <thead>
           <tr>
             <th>Year</th>
-            <th>Division</th>     {/* renamed from division_name */}
-            <th>Crime Type</th>   {/* renamed from Offence */}
-            <th>Count</th>        {/* renamed from crime_count */}
+            <th>Division</th>     
+            <th>Crime Type</th>   
+            <th>Count</th>        
           </tr>
         </thead>
         <tbody>
@@ -27,6 +30,14 @@ function TableComponent({ rows }) {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="3" style={{ fontWeight: "bold", textAlign: "right" }}>
+              Total
+            </td>
+            <td style={{ fontWeight: "bold" }}>{totalCount}</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

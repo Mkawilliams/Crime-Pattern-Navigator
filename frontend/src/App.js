@@ -15,6 +15,7 @@ function App() {
   const [mapTheme, setMapTheme] = useState("light");
   const [geojson, setGeojson] = useState(null);
   const [clickedDivision, setClickedDivision] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Load filter options
 useEffect(() => {
@@ -101,6 +102,35 @@ const crimeData = Array.isArray(tableData)
         setMapTheme={setMapTheme}
       />
 
+      {/* Hamburger menu */}
+      <div className="hamburger" onClick={() => setMenuOpen(true)}>
+        ☰
+      </div>
+
+      {menuOpen && (
+        <div className="menu-overlay">
+          <button className="close" onClick={() => setMenuOpen(false)}>×</button>
+
+          {/* Use your Filters component here */}
+          <Filters
+            years={years}
+            divisions={divisions}
+            offences={offences}
+            selectedYears={selectedYears}
+            setSelectedYears={setSelectedYears}
+            selectedDivisions={selectedDivisions}
+            setSelectedDivisions={setSelectedDivisions}
+            selectedOffences={selectedOffences}
+            setSelectedOffences={setSelectedOffences}
+            mapTheme={mapTheme}
+            setMapTheme={setMapTheme}
+          />
+        </div>
+      )}
+
+
+
+
       {/* Map wrapper */}
       <div className="map-wrapper">
         <MapComponent 
@@ -111,16 +141,18 @@ const crimeData = Array.isArray(tableData)
         selectedDivision={clickedDivision} />
       </div>
 
-      {/* Summary table overlay */}
+     {/* Summary table overlay */}
       <div className="table-wrapper">
         <div className="summary-table">
           <TableComponent rows={filteredRows} />
         </div>
-        <div>
-          ©️ 2026 Matthew Williams. All rights reserved.
-        </div>
       </div>
-    </div>
+
+      {/* Copyright below table */}
+      <div className="copyright">
+        © 2026 Matthew Williams. All rights reserved.
+      </div>
+      </div>
   );
 }
 

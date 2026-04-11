@@ -1,5 +1,5 @@
 /* Desktop layout */
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   .filters {
     display: flex;
     justify-content: center;
@@ -13,6 +13,7 @@
   height: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  background-color: false;
 }
 
 /* Disclaimer banner */
@@ -26,7 +27,7 @@
   padding: 10px;
   text-align: center;
   font-weight: bold;
-  z-index: 2000;
+  z-index: 1;
   box-sizing: border-box;
 }
 
@@ -41,9 +42,14 @@
   padding: 10px 15px;
   border-radius: 8px;
   font-weight: bold;
-  z-index: 2000;
+  z-index: 2;
   text-align: center;
   box-sizing: border-box;
+}
+
+/*Hide Hamburger Menu*/
+.hamburger {
+  display: none;
 }
 
 /* Filters panel */
@@ -107,6 +113,7 @@ input:checked + .slider:before {
   position: relative;
   width: 100%;
   height: 100vh;
+  z-index: 0;
 }
 
 .crime-map {
@@ -116,35 +123,74 @@ input:checked + .slider:before {
 
 /* Summary table overlay */
 .table-wrapper {
-  margin-bottom: 3%;
-  max-height: 400px;       /* scrollable height */
-  overflow-y: auto;        /* enables scrolling */
+  position: fixed;
+  bottom: 3%;
+  right: 0;
+  width: 33%;
+  margin-bottom: 2%;
+  max-height: 400px;       
+  overflow-y: auto; 
+  overflow-x: hidden;
+  opacity: 0.8; 
+  z-index: 2;
+  background: rgba(0,0,0,0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  padding: 0px;
 }
 
 .table-wrapper::-webkit-scrollbar {
   display: none;             /* scrollbar width */
 }
 
+
+/* Table styling */
 .table-data {
   border-collapse: collapse;
   width: 100%;
 }
 
+/* Header row */
 .table-data th {
-  position: sticky;        /* lock headers */
-  top: 0;                  /* stick to top */
+  position: sticky;        /* locks headers */
+  top: 0;                  /* sticks to top */
   background: #222;        /* dark background */
   color: #fff;             /* header text color */
   padding: 8px;
   text-align: left;
-  z-index: 2;              /* ensure header stays above rows */
+  z-index: 5; 
+  
 }
 
+/* Table rows */
 .table-data td {
   padding: 8px;
   height: 40px;            /* row height */
   border-bottom: 1px solid #444;
   color: #ddd;
+  
+}
+
+/*Alternate row styling */
+.table-data tbody tr:nth-child(even) {
+  background-color: rgba(255,255,255,0.05);
+}
+
+/*Hover effect for table rows*/
+.table-data tbody tr:hover {
+  background: rgba(255,255,255,0.1);
+  transition: background 0.3s ease;
+}
+
+/*Footer styling*/
+.table-data tfoot td {
+  position: sticky;
+  bottom: 0;
+  background: #333;
+  border-bottom: none;
+  color: #fff;
+  padding: 8px;
+  font-size: 12px;
 }
 
 /*Legend*/
@@ -183,7 +229,7 @@ input:checked + .slider:before {
 }
 
 /* Copyright notice */
-.table-wrapper div:last-child {
+.copyright {
   position: fixed;
   bottom: 2.5%;
   right: 0px;
@@ -192,20 +238,174 @@ input:checked + .slider:before {
   padding: 5px 10px;
   border-radius: 8px;
   font-size: 12px;
-  z-index: 3000;
+  z-index: 3;
 }
 
 
-/* Mobile layout */
-@media (max-width: 767px) {
-  .filters {
-    display: block;
-    text-align: center;
+/* Mobile & 13inch Laptop layout */
+@media (max-width: 1199px) {
+
+  .app-container {
+    display: flex;
+    flex-direction: column;   
+    min-height: 100vh;        
+    background-color: #222;
+    font-family: "Inter","Segoe UI", sans-serif;
+    font-size: 10px;
+    color: #222;
   }
 
-  .filters select {
-    display: block;
-    margin: 8px auto;
-    width: 90%;
+  /* Disclaimer */
+  .disclaimer, .title-overlay {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    text-align: center;
   }
+  /*Title overlay*/
+  .title-overlay {
+    font-size: 12px;
+    left:auto;
+  }
+
+  /*Hide filters */
+  .filters {
+    display: none;
+  }
+
+  /*Hamburger Menu*/
+  .hamburger {
+  display: block;
+  position: relative;
+  top: auto;
+  left: 10px;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 5;
+  color: #fff;
+  }
+
+  /*Menu Overlay*/
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(34,34,34,0.95);
+    color: #fff;
+    z-index: 5;
+    }
+
+  /*Menu Overlay Close*/
+  .menu-overlay .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /*Menu Filters Overlay*/
+  .menu-overlay .filters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 40%;
+    width: auto;
+    height: auto;
+    gap: 12px;
+    font-size: 12px; /* smaller font */
+    color: white;
+  }
+
+  /* Filters Labels*/
+  .MuiSelect-select{
+    color: #fff !important;
+  }
+
+  /* Dropdown arrow */
+  .MuiSelect-icon {
+    color: #fff !important;
+  }
+
+
+  /* Map in middle */
+  .map-wrapper {                 
+    height: 53vh;                /* half viewport height */  
+    z-index: 1;            
+  }
+
+  /* Table at bottom */
+  .table-wrapper {
+    position: static;         /* let flexbox stack it */
+    margin-top: auto;
+    max-height: 32vh;        /* scrollable height */
+    overflow-y: auto;
+    border-radius: 12px;
+    box-shadow: false;
+    padding: 0px;
+    width: 100%;
+    left: -10px;
+    z-index: 2;
+    margin-bottom: 0;
+  }
+
+  .table-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .table-data {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 9px;           /* shrink table font */
+  }
+
+  .table-data th {
+    position: sticky;
+    top: 0;
+    background: #222;
+    color: #fff;
+    padding: 6px;
+    text-align: left;
+    z-index: 2;
+    font-size: 13px;           /* smaller header font */
+  }
+
+  .table-data td {
+    padding: 2px;
+    height: 15px;
+    border-bottom: 1px solid #444;
+    color: #ddd;
+    font-size: 12px;           /* smaller cell font */
+  }
+
+  /* Legend shrink */
+  .legend {
+    font-size: 7px;           
+    width: 40%;
+    left: 1%;             
+  }
+
+  .legend h4 {
+    font-size: 10px;
+  }
+
+  .gradient-bar {
+    height: 5px;             /* thinner gradient bar */
+  }
+
+  /*Copyright notice*/
+  .copyright {
+  position: static;
+  left:0;
+  text-align: center;
+  font-size: 8px;
+  color: #aaa;
+  bottom: 0;
+}
 }
