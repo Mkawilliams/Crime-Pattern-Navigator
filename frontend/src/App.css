@@ -7,6 +7,7 @@
   }
 }
 
+/*Global styles*/
 .app-container {
   position: relative;
   width: 100%;
@@ -80,7 +81,7 @@
   width: 0;
   height: 0;
 }
-
+ /*Slider for switch*/
 .slider {
   position: absolute;
   cursor: pointer;
@@ -152,8 +153,8 @@ input:checked + .slider:before {
 
 /* Header row */
 .table-data th {
-  position: sticky;        /* locks headers */
-  top: 0;                  /* sticks to top */
+  position: sticky;          /* locks headers */
+  top: 0;                    /* sticks to top */
   background: #222;        /* dark background */
   color: #fff;             /* header text color */
   padding: 8px;
@@ -165,7 +166,7 @@ input:checked + .slider:before {
 /* Table rows */
 .table-data td {
   padding: 8px;
-  height: 40px;            /* row height */
+  height: 40px;               /* row height */
   border-bottom: 1px solid #444;
   color: #ddd;
   
@@ -319,20 +320,19 @@ input:checked + .slider:before {
     width: auto;
     height: auto;
     gap: 12px;
-    font-size: 12px; /* smaller font */
+    font-size: 12px; 
     color: white;
   }
 
-  /* Filters Labels*/
+  /* Overlay Filters Labels*/
   .MuiSelect-select{
     color: #fff !important;
   }
 
-  /* Dropdown arrow */
+  /* Overlay Dropdown arrow */
   .MuiSelect-icon {
     color: #fff !important;
   }
-
 
   /* Map in middle */
   .map-wrapper {                 
@@ -342,7 +342,7 @@ input:checked + .slider:before {
 
   /* Table at bottom */
   .table-wrapper {
-    position: static;         /* let flexbox stack it */
+    position: static;         
     margin-top: auto;
     max-height: 32vh;        /* scrollable height */
     overflow-y: auto;
@@ -362,7 +362,7 @@ input:checked + .slider:before {
   .table-data {
     border-collapse: collapse;
     width: 100%;
-    font-size: 9px;           /* shrink table font */
+    font-size: 9px;           
   }
 
   .table-data th {
@@ -373,7 +373,7 @@ input:checked + .slider:before {
     padding: 6px;
     text-align: left;
     z-index: 2;
-    font-size: 13px;           /* smaller header font */
+    font-size: 13px;           
   }
 
   .table-data td {
@@ -381,7 +381,7 @@ input:checked + .slider:before {
     height: 15px;
     border-bottom: 1px solid #444;
     color: #ddd;
-    font-size: 12px;           /* smaller cell font */
+    font-size: 12px;           
   }
 
   /*Footer styling*/
@@ -401,7 +401,7 @@ input:checked + .slider:before {
   }
 
   .gradient-bar {
-    height: 5px;             /* thinner gradient bar */
+    height: 5px;             
   }
 
   /*Copyright notice*/

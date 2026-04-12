@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 
+// This component renders the legend for the crime percentage gradient on the map.
 function Legend({ crimeData }) {
   return (
     <div className="legend">

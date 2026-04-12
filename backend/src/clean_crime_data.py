@@ -25,11 +25,9 @@ mask = df["Offence"].isna() | (df["Offence"] == "")
 for i in df[mask].index:
     previous_offence = df.loc[i - 1, "Offence"]
 
-
     if previous_offence == "Stealing" or (previous_offence == "Stealing"):
         df["Offence"] = df["Offence"].replace({"Vehicle": "Stealing from Vehicle"})
         df.loc[i, "Offence"] = "Stealing from Vehicle"
-        
 
     elif previous_offence == "Robbery":
         df.loc[i, "Offence"] = "Attempted Robbery"

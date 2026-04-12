@@ -1,9 +1,11 @@
-# Crime Pattern Navigator
+# Bahamas Crime Intelligence Map
 
 ## 📌 Project Overview
-Crime Pattern Navigator is a data-driven project designed to analyze crime trends across subdivisions in The Bahamas. Using official Royal Bahamas Police Force (RBPF) annual crime reports and statistical releases, the project aims to provide clear insights into how crime patterns evolve over time and across different communities.
+Bahamas Crime Intelligence Map is a data-driven project designed to analyze crime trends across subdivisions in The Bahamas. Using official Royal Bahamas Police Force (RBPF) publicly available annual crime reports and statistical releases, the project aims to provide clear insights into how crime patterns evolve over time and across different communities.
 
-The ultimate goal is to build a transparent, accessible tool that supports:
+Currently, the platform focuses on **New Providence & Paradise Island** as the pilot region, serving as the foundation for a scalable, nationwide crime intelligence system.
+
+The goal is to create a transparent, accessible, and decision-support tool that supports:
 - **Trend analysis** of crime categories (e.g., property crime, violent crime, etc.)
 - **Subdivision-level comparisons** to identify hotspots and safer areas
 - **Visual mapping** of crime data using QGIS, enabling geographic exploration of trends
@@ -11,45 +13,135 @@ The ultimate goal is to build a transparent, accessible tool that supports:
 ---
 
 ## 🔎 Objectives
-- Collect and organize RBPF crime reports into structured datasets.
-- Identify year-over-year changes in crime categories.
+- Structure and standardize RBPF crime data into machine-readable datasets.
+- Analyze year-over-year changes in crime categories.
 - Highlight subdivision-specific crime trends.
-- Provide visual dashboards for analysts, policymakers, and community stakeholders.
-- **Future Development:** Integrate QGIS shapefiles to display subdivision-level crime trends on an interactive map.
+- Provide visual dashboards for analysts, policymakers, law enforcement stakeholders, and community leaders.
+- Integrate QGIS shapefiles to display subdivision-level crime trends on an interactive map.
+- Build a scalable foundation for national crime intelligence and future AI integration.
 
 ---
 
 ## 🗂️ Data Sources
 - Royal Bahamas Police Force Annual Crime Reports (2019–2024)
 - Official RBPF statistical releases
-- Subdivision boundary shapefiles (for QGIS integration)
+- Subdivision boundary GeoJSON/shapefiles (for QGIS integration)
+
+### 🗺️Geospatial Data Engineering
+- Custom geospatial data was developed to enable subdivision-level mapping and analysis.
+- Created a custom GeoJSON file of New Providence and Paradise Island subdivisions, derived from official public boundary data (posted by myself as a separate project).
+- Standardized subdivision codes and names to align with RBPF crimedatasets.
+- Prepared and validated geometry for use in interactive web mapping (Leaflet).
+
+### ⚙️ Data Engineering & Automation
+- Extracted raw RBPF crime data from official reports.
+- Built an automated pipeline to clean, normalize, and structure datasets.
+- Converted processed data into CSV files and imported into a database for easy scalability and updating.
+- Ensured consistent subdivision codes and offence categories for reliable filtering and analysis.
+- Designed the workflow to support future expansion and integration with national datasets.
+
+### 🔄 Data Processing Workflow
+
+```mermaid
+flowchart LR
+    A[RBPF Crime Reports (PDF/Docs)] --> B[Data Extraction]
+    B --> C[Automated Cleaning & Normalization]
+    C --> D[CSV Export]
+    D --> E[Database Import]
+    E --> F[Frontend Map & Table UI] 
+```
 
 ---
 
 ## 🛠️ Tools & Technologies
+### Backend
 - **Python** for data cleaning and analysis
-- **Pandas / NumPy** for statistical processing
-- **Matplotlib / Seaborn / Plotly** for visualizations
+- **Pandas / NumPy** for statistical and data processing
+- **FastAPI** for connecting backend coding to the frontend
+
+### Frontend
+- **React.js** for user interface
+- **React Leaflet** for interactive geospatial mapping
+
+### Data Visualization 
+- **Matplotlib / Seaborn / Plotly** for visualizations (initial prototypes)
+- **Lealfet-based choropleth mapping** for visualizations (current implementation)
 - **QGIS** for spatial mapping of subdivision-level crime trends
-- **GitHub** for version control and collaboration
+
+### Development Workflow and Tools
+- **Virtual Studio Code** for development
+- **Docker** for consistent containerization
+- **Microsoft's Copilot and OpenAI's ChatGPT** for code suggestions, problem-solving, debugging, and architectural guidance
+- **Git & GitHub** for version control and collaboration
 
 ---
 
-## 🌍 Future Roadmap
-1. **Data Structuring:** Convert raw PDF reports into machine-readable datasets.
-2. **Trend Analysis:** Build dashboards showing crime category changes over time.
-3. **Subdivision Mapping:** Overlay crime data onto Bahamian subdivision maps using QGIS.
-4. **Interactive Explorer:** Develop a public-facing tool for visualizing crime trends geographically.
+## 📂 Project Structure
+- `frontend/` – React UI and Leaflet map
+- `backend/` – FastAPI services and data pipeline
+- `data/` – Cleaned CSV datasets
+- `geojson/` – Subdivision boundary files
+
+---
+
+## 🌍 Current Features (Phase 1: New Providence and Paradise Island)
+1. **Interactive Crime Heatmap** displayed by police subdivisions.
+2. **Dynamic Filtering** which filters by Year, Division and/or Offence Type.
+3. **Hover-Based subdivision Insights** displays insights for a division by simply hovering over it.
+4. **Click-to-filter Comparison Table** allowing users to filter divisions quickly by clicking them.
+5. **Responsive design** coded for both mobile and desktop devices.
+6. **Dark/Light Map Themes** granting users two map themes. 
+
+---
+
+## 🚀 Future Roadmap
+### Phase 2 – Expansion
+- Extend coverage to Grand Bahama and Family Islands
+- Improve dataset completeness and historical depth
+
+### Phase 3 – Intelligence Layer
+- Predictive crime modeling (machine learning)
+- Time-series forecasting of crime trends
+- Risk scoring for division
+
+### Phase 4 – Decision Support System
+- Policy simulation tools
+- Resource allocation insights for law enforcement
+- Public-facing dashboards for transparency
 
 ---
 
 ## 📖 Description
-Crime Pattern Navigator is more than just a dataset—it’s a **crime insights platform** for The Bahamas. By combining statistical analysis with geographic visualization, the project will help communities, policymakers, and researchers understand where crime is concentrated and how it changes over time. The integration with QGIS will allow subdivision-level mapping, making trends visible in a way that raw tables and charts cannot.
+Bahamas Crime Intelligence Map is more than just a visualization tool—it is **a prototype of a national crime intelligence system for The Bahamas**. By combining statistical analysis with geographic visualization, the project will help communities, policymakers, and researchers understand where crime is concentrated and how it changes over time. The integration with QGIS will allow subdivision-level mapping, making trends visible in a way that raw tables and charts cannot. This approach transforms static reports into actionable intelligence, supporting smarter decision-making and long-term national development.
+
+---
+
+## 🤝 Feedback & Iteration
+This project was refined through continuous feedback from peers, family, and early users, helping improve:
+- User interface and usability
+- Feature prioritization
+- Overall user experience across devices
 
 ---
 
 ## 🤝 Contributions
-Contributions are welcome!   
+Contributions are welcome! Assistance with gaining the boundaries and subdivisions for Grand Bahama and other family islands would be greatly appreciated; into this next phase.
+
+---
+
+### 🚀 Getting Started (Development)
+If you’d like to run the project locally or contribute:
+1. Clone the repository
+2. Install frontend dependencies (`npm install`)
+3. Start the React development server (`npm start`)
+4. Install backend dependencies (`pip install -r requirements.txt`)
+5. Run FastAPI (`uvicorn main:app --reload`)
+
+---
+
+## 🌐 Deployment
+The Bahamas Crime Intelligence Map will be deployed as a live web application.  
+Once deployed, users can access the platform directly via the hosted URL without needing to install or run code locally.
 
 ---
 

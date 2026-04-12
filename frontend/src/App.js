@@ -4,6 +4,11 @@ import MapComponent from "./MapComponent";
 import TableComponent from "./TableComponent";
 import Filters from "./Filters";
 
+// This is the main App component that orchestrates the entire application. 
+// It manages the state for filters, map theme, GeoJSON data, and the currently clicked division. 
+
+// The App component is responsible for fetching filter options and table data from the backend API, as well as loading the GeoJSON data for the map. 
+// It also derives the crime data for the map from the table data and handles the logic for filtering the table based on user interactions with the map and dropdowns.
 function App() {
   const [years, setYears] = useState([]);
   const [divisions, setDivisions] = useState([]);
@@ -25,7 +30,7 @@ useEffect(() => {
       setYears(data.years || []);
       setDivisions(data.divisions || []);
       setOffences(data.offences || []);
-      // set sensible defaults
+      // Sets sensible defaults
       setSelectedYears(data.years || []);
       setSelectedDivisions(data.divisions || []);
       setSelectedOffences(data.offences || []);
@@ -76,6 +81,7 @@ const crimeData = Array.isArray(tableData)
 
 
   return (
+    // Main app container with all components and overlays
     <div className="app-container">
       {/* Disclaimer banner */}
       <div className="disclaimer">

@@ -3,6 +3,13 @@ import pandas as pd
 import re
 import os
 
+# This script extracts crime data from PDF files in the specified directory
+# Processes the text to identify offence names and their corresponding counts across different divisions, and saves the structured data into a CSV file
+# The script handles cases where offence names may be split across lines and ensures that
+# Only valid rows with the expected number of numerical values are included in the final dataset.
+
+
+# Define the expected columns for the output CSV
 columns = [
     "Offence",
     "A",
@@ -23,6 +30,7 @@ columns = [
 
 all_rows = []
 
+# Set up paths for input PDFs and output CSV
 base_dir = os.path.dirname(__file__)  # points code to go up one level
 PDF_DIR = os.path.join(base_dir, "..", "data", "raw_pdfs")
 PDF_DIR = os.path.abspath(PDF_DIR)  # directory containing PDF files
@@ -42,6 +50,7 @@ for filename in os.listdir(PDF_DIR):
         path = os.path.join(PDF_DIR, filename)
         print("Opening:", filename)
 
+        # Extract tables and text from each page of the PDF
         with pdfplumber.open(path) as pdf:
             for page in pdf.pages:
                 tables = page.extract_tables()

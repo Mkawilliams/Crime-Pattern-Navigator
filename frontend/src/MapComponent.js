@@ -4,6 +4,10 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Legend from "./Legend";
 
+// This component renders the interactive map using react-leaflet. 
+// It displays the crime data as a choropleth map, where the color intensity of each division corresponds to the crime count. 
+// It also handles user interactions such as clicking on divisions to filter the table data.
+
 //Map click handler MUST be outside
 function MapClickHandler({ onDivisionClick }) {
   useMapEvents({
@@ -55,7 +59,9 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
     });
   };
 
+  // Re-render GeoJSON when crimeData changes to update colors
   return (
+    // Map Container
     <MapContainer
       center={[25.0343, -77.3963]}
       zoom={11}
@@ -73,7 +79,7 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
             : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         }
       />
-
+      {/* GeoJSON Layer */}
       {geojson && (
         <GeoJSON
           key={JSON.stringify(crimeData)}
@@ -83,6 +89,7 @@ function MapComponent({ geojson, mapTheme, crimeData, onDivisionClick }) {
         />
       )}
 
+      {/* Legend Layer */}
       <Legend crimeData={crimeData} />
     </MapContainer>
   );

@@ -5,6 +5,12 @@ import json
 import os
 import pandas as pd
 
+# This script sets up a FastAPI application that serves crime data from a SQLite database.
+# It provides endpoints for retrieving filter options, map data, and table data based on user-selected criteria.
+# The application also handles CORS to allow requests from a frontend running on localhost:3000.
+# The crime data is loaded into a DataFrame for efficient querying and filtering before being returned as JSON responses.
+
+# Initialize FastAPI app
 app = FastAPI()
 
 # Connect to the SQLite database and load the data into a DataFrame
@@ -23,10 +29,12 @@ division_lookup = {
 }
 df["division_name"] = df["division_code"].map(division_lookup)
 
-#Opening Message
+
+# Opening Message
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the Bahamas Crime Data API!"}
+
 
 # Filter Options
 @app.get("/filters")
@@ -67,7 +75,7 @@ def get_table_data(
 ):
     print("Filters received:", years, divisions, offences)
 
-
+    # Apply filters to the DataFrame
     filtered = df.copy()
     if years:
         filtered = filtered[filtered["Year"].isin(years)]
@@ -86,6 +94,7 @@ def get_table_data(
     return grouped.to_dict(orient="records")
 
 
+# Set up CORS middleware to allow requests from the frontend running on localhost:3000
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],

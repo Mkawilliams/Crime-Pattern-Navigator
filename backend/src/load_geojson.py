@@ -1,6 +1,8 @@
 import json
 import sqlite3
 
+# This script connects to the SQLite database, creates a table for police subdivisions,
+# loads the geographical polygons from a GeoJSON file, and inserts the data into the database.
 # connect to database
 conn = sqlite3.connect("crime.db")
 cur = conn.cursor()
@@ -22,7 +24,7 @@ for feature in data["features"]:
     geom = json.dumps(feature["geometry"])
 
     cur.execute("INSERT INTO subdivision (name, geom) VALUES (?, ?)", (name, geom))
-
+# Commit changes and close connection
 conn.commit()
 conn.close()
 

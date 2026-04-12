@@ -4,10 +4,15 @@ import pandas as pd
 import json
 import folium
 
-# connect to database
+# Used in initial protoype to create a crime map. T
+# This script connects to the SQLite database, queries the total crime count by division,
+# loads the geographical polygons for the police subdivisions,
+# And creates a choropleth map using Folium. The map is saved as an HTML file and opened in the default web browser.
+
+# Connect to database
 conn = sqlite3.connect("crime.db")
 
-# query crime totals by division
+# Query crime totals by division
 df = pd.read_sql_query(
     """
 SELECT division_code, SUM(crime_count) as crime_count
@@ -21,7 +26,7 @@ GROUP BY division_code
 with open("backend/geo/Police Subdivisions.geojson") as f:
     geo = json.load(f)
 
-# create map
+# Create map
 crime_map = folium.Map(
     location=[25.05, -77.35],
     zoom_start=12,
@@ -40,6 +45,7 @@ folium.Choropleth(
     legend_name="Total Crime by Division",
 ).add_to(crime_map)
 
+# Add tooltips to show division name and crime count on hover
 folium.GeoJson(
     geo,
     name="Divisions",
@@ -48,7 +54,7 @@ folium.GeoJson(
     ),
 ).add_to(crime_map)
 
-
+# Save map to HTML and open in browser
 crime_map.save("crime_map.html")
 
 print("Map created successfully")

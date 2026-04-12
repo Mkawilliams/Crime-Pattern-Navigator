@@ -1,12 +1,32 @@
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
 #Python Files to ignore
 model.py
 preprocess.py
 visualize.py
 
+# Python cache and build
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+*.log
+
 #Virtual Environment
 venv/
 env/
 .venv/
+.env
+.env.*
 
 #Data Files
 crime_bahamas.csv
@@ -14,6 +34,8 @@ crime_bahamas.csv
 #Folders
 backend/data/raw_pdfs
 frontend/node_modules
+frontend/build/
+frontend/dist/
 
 #Dependencies
 /node_modules
@@ -21,10 +43,18 @@ frontend/node_modules
 .pnp.js
 
 #Testing
-/coverage
+frontend/coverage/
 
 #Production
-/build
+frontend/build
+
+# Docker artifacts
+*.pid
+*.seed
+*.bak
+*.tmp
+*.log
+docker-compose.override.yml
 
 #Misc
 .DS_Store
@@ -33,6 +63,7 @@ frontend/node_modules
 .env.test.local
 .env.production.local
 
+#Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

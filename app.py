@@ -7,6 +7,11 @@ import plotly.graph_objects as go
 from dash import Dash, ctx, dcc, html
 from dash.dependencies import Input, Output
 
+# Used in the initial prototype but not currently in use. Keeping for potential future use.
+# This app is a Dash-based interactive map that visualizes crime data across police subdivisions in the Bahamas. 
+# It allows users to filter crime data by year, division, and offence type, and displays the results on a choropleth map. 
+# The app also includes a summary table that updates based on the selected filters and clicked division on the map.
+
 # Load crime data from SQLite database
 conn = sqlite3.connect("crime.db")
 df = pd.read_sql_query("SELECT * FROM crime_data", conn)
@@ -101,6 +106,7 @@ app.layout = html.Div(
                     inputStyle={"marginRight": "5px"},
                 ),
             ],
+            # Filter container styling for better visibility and user experience
             className="filters",
             style={
                 "position": "absolute",
@@ -172,7 +178,7 @@ app.layout = html.Div(
     ],
 )
 
-
+# Map division codes to names for hover info
 df["division_name"] = df["division_code"].map(division_lookup)
 
 
@@ -184,6 +190,8 @@ df["division_name"] = df["division_code"].map(division_lookup)
     Input("offence_filter", "value"),
     Input("map_style", "value"),
 )
+
+# This callback updates the choropleth map based on the selected filters for year, division, offence, and map style. 
 def update_map(years, divisions, offences, map_style):
 
     filtered = df.copy()
@@ -197,12 +205,14 @@ def update_map(years, divisions, offences, map_style):
     if offences:
         filtered = filtered[filtered["Offence"].isin(offences)]
 
+    # Group data by division to get total crime count for coloring the map
     grouped = (
         filtered.groupby(["division_code", "division_name"])["crime_count"]
         .sum()
         .reset_index()
     )
 
+    # Create choropleth map using Plotly Express
     fig = px.choropleth_mapbox(
         grouped,
         geojson=geojson,
@@ -219,6 +229,7 @@ def update_map(years, divisions, offences, map_style):
         opacity=0.75,
     )
 
+    # Update layout for better aesthetics and interactivity
     fig.update_layout(
         margin={"r": 0, "t": 0, "l": 0, "b": 0},
         uirevision="constant",
