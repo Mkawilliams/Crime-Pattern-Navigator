@@ -140,6 +140,15 @@ You can explore the Bahamas Crime Intelligence Map directly through the followin
 
 - `/table-data` → Detailed subdivision-level crime statistics
 
+### ⚠️ Note on Backend Hosting (Render Free Tier)  
+The backend is hosted on Render’s free plan. This means:
+
+The service “spins down” after periods of inactivity.
+
+The first request after inactivity may take 30–60 seconds to wake up.
+
+Subsequent requests will be fast once the service is active.
+
 ---
 
 ## 🤝 Contributions
