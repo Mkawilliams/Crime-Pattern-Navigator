@@ -1,7 +1,7 @@
 # Bahamas Crime Intelligence Map
 
 ## 📌 Project Overview
-Bahamas Crime Intelligence Map is a data-driven project designed to analyze crime trends across subdivisions in The Bahamas. Using official Royal Bahamas Police Force (RBPF) publicly available annual crime reports and statistical releases, the project aims to provide clear insights into how crime patterns evolve over time and across different communities.
+Bahamas Crime Intelligence Map is a data-driven project designed to analyze crime trends across subdivisions in The Bahamas. Using publicly available annual crime reports and statistical releases from the Royal Bahamas Police Force (RBPF), the project aims to provide clear insights into how crime patterns evolve over time and across different communities.
 
 Currently, the platform focuses on **New Providence & Paradise Island** as the pilot region, serving as the foundation for a scalable, nationwide crime intelligence system.
 
@@ -30,7 +30,7 @@ The goal is to create a transparent, accessible, and decision-support tool that 
 ### 🗺️Geospatial Data Engineering
 - Custom geospatial data was developed to enable subdivision-level mapping and analysis.
 - Created a custom GeoJSON file of New Providence and Paradise Island subdivisions, derived from official public boundary data (posted by myself as a separate project).
-- Standardized subdivision codes and names to align with RBPF crimedatasets.
+- Standardized subdivision codes and names to align with RBPF crime datasets.
 - Prepared and validated geometry for use in interactive web mapping (Leaflet).
 
 ### ⚙️ Data Engineering & Automation
@@ -87,7 +87,7 @@ flowchart LR
 ## 🌍 Current Features (Phase 1: New Providence and Paradise Island)
 1. **Interactive Crime Heatmap** displayed by police subdivisions.
 2. **Dynamic Filtering** which filters by Year, Division and/or Offence Type.
-3. **Hover-Based subdivision Insights** displays insights for a division by simply hovering over it.
+3. **Hover-Based subdivision insights** displays information for a division by simply hovering over it.
 4. **Click-to-filter Comparison Table** allowing users to filter divisions quickly by clicking them.
 5. **Responsive design** coded for both mobile and desktop devices.
 6. **Dark/Light Map Themes** granting users two map themes. 
@@ -102,7 +102,7 @@ flowchart LR
 ### Phase 3 – Intelligence Layer
 - Predictive crime modeling (machine learning)
 - Time-series forecasting of crime trends
-- Risk scoring for division
+- Risk scoring for each division
 
 ### Phase 4 – Decision Support System
 - Policy simulation tools
@@ -116,18 +116,6 @@ Bahamas Crime Intelligence Map is more than just a visualization tool—it is **
 
 ---
 
-## 🌐 Deployment
-
-- **Frontend (React, Vercel):** [https://bahamas-crime-intelligence-map.vercel.app](https://bahamas-crime-intelligence-map.vercel.app)
-- **Backend (FastAPI, Render):** [https://bahamas-crime-intelligence-map.onrender.com](https://bahamas-crime-intelligence-map.onrender.com)
-
-The frontend consumes the backend API endpoints:
-- `/filters` → filter options
-- `/map-data` → aggregated crime counts for map visualization
-- `/table-data` → detailed crime statistics for tables
-
----
-
 ## 🤝 Feedback & Iteration
 This project was refined through continuous feedback from peers, family, and early users, helping improve:
 - User interface and usability
@@ -136,8 +124,26 @@ This project was refined through continuous feedback from peers, family, and ear
 
 ---
 
+## 🌐 Live Demo & Deployment
+You can explore the Bahamas Crime Intelligence Map directly through the following hosted services:
+
+- **Frontend (React, Vercel)**: https://bahamas-crime-intelligence-map.vercel.app  
+→ This is the interactive web application where you can filter crime data, view subdivision heatmaps, and explore trends.
+
+- **Backend (FastAPI, Render)**: https://bahamas-crime-intelligence-map.onrender.com  
+→ This is the API service powering the frontend. It provides endpoints for filters, map data, and table data. You can also explore the interactive API documentation at /docs.
+
+### 🔗 Available API Endpoints
+- `/filters` → Retrieve available years, divisions, and offence categories
+
+- `/map-data` → Aggregated crime counts for map visualization
+
+- `/table-data` → Detailed subdivision-level crime statistics
+
+---
+
 ## 🤝 Contributions
-Contributions are welcome! Assistance with gaining the boundaries and subdivisions for Grand Bahama and other family islands would be greatly appreciated; into this next phase.
+Contributions are welcome! Assistance in obtaining boundaries and subdivisions for Grand Bahama and other family islands would be greatly appreciated; as we move into the next phase.
 
 ---
 
@@ -147,13 +153,7 @@ If you’d like to run the project locally or contribute:
 2. Install frontend dependencies (`npm install`)
 3. Start the React development server (`npm start`)
 4. Install backend dependencies (`pip install -r requirements.txt`)
-5. Run FastAPI (`uvicorn main:app --reload`)
-
----
-
-## 🌐 Deployment
-The Bahamas Crime Intelligence Map will be deployed as a live web application.  
-Once deployed, users can access the platform directly via the hosted URL without needing to install or run code locally.
+5. Run FastAPI (`uvicorn api:app --reload`)
 
 ---
 
