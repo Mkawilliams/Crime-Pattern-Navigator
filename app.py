@@ -8,8 +8,8 @@ from dash import Dash, ctx, dcc, html
 from dash.dependencies import Input, Output
 
 # Used in the initial prototype but not currently in use. Keeping for potential future use.
-# This app is a Dash-based interactive map that visualizes crime data across police subdivisions in the Bahamas. 
-# It allows users to filter crime data by year, division, and offence type, and displays the results on a choropleth map. 
+# This app is a Dash-based interactive map that visualizes crime data across police subdivisions in the Bahamas.
+# It allows users to filter crime data by year, division, and offence type, and displays the results on a choropleth map.
 # The app also includes a summary table that updates based on the selected filters and clicked division on the map.
 
 # Load crime data from SQLite database
@@ -191,7 +191,7 @@ df["division_name"] = df["division_code"].map(division_lookup)
     Input("map_style", "value"),
 )
 
-# This callback updates the choropleth map based on the selected filters for year, division, offence, and map style. 
+# This callback updates the choropleth map based on the selected filters for year, division, offence, and map style.
 def update_map(years, divisions, offences, map_style):
 
     filtered = df.copy()
