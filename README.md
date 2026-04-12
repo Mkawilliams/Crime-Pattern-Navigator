@@ -116,6 +116,18 @@ Bahamas Crime Intelligence Map is more than just a visualization tool—it is **
 
 ---
 
+## 🌐 Deployment
+
+- **Frontend (React, Vercel):** [https://bahamas-crime-intelligence-map.vercel.app](https://bahamas-crime-intelligence-map.vercel.app)
+- **Backend (FastAPI, Render):** [https://bahamas-crime-intelligence-map.onrender.com](https://bahamas-crime-intelligence-map.onrender.com)
+
+The frontend consumes the backend API endpoints:
+- `/filters` → filter options
+- `/map-data` → aggregated crime counts for map visualization
+- `/table-data` → detailed crime statistics for tables
+
+---
+
 ## 🤝 Feedback & Iteration
 This project was refined through continuous feedback from peers, family, and early users, helping improve:
 - User interface and usability
