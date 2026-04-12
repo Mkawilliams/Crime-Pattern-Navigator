@@ -24,7 +24,7 @@ function App() {
 
   // Load filter options
 useEffect(() => {
-  fetch("${process.env.REACT_APP_API_URL}/filters") //https://locahost:8000/filters
+  fetch(`${process.env.REACT_APP_API_URL}/filters`) //https://locahost:8000/filters
     .then(res => res.json())
     .then(data => {
       setYears(data.years || []);
