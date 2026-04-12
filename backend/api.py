@@ -97,7 +97,11 @@ def get_table_data(
 # Set up CORS middleware to allow requests from the frontend running on localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:3000",
+        "http://frontend:3000",
+        "https://bahamas-crime-intelligence-map.vercel.app"
+        ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
