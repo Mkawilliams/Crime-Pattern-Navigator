@@ -24,7 +24,7 @@ function App() {
 
   // Load filter options
 useEffect(() => {
-  fetch("http://localhost:8000/filters")
+  fetch("${process.env.REACT_APP_API_URL}/filters") //https://locahost:8000/filters
     .then(res => res.json())
     .then(data => {
       setYears(data.years || []);
@@ -51,7 +51,7 @@ useEffect(() => {
     const divisionParams = selectedDivisions.map(d => `divisions=${encodeURIComponent(d)}`).join("&");
     const offenceParams = selectedOffences.map(o => `offences=${encodeURIComponent(o)}`).join("&");
 
-    fetch(`http://localhost:8000/table-data?${yearParams}&${divisionParams}&${offenceParams}`)
+    fetch(`${process.env.REACT_APP_API_URL}/table-data?${yearParams}&${divisionParams}&${offenceParams}`) //https://locahost:8000/table-data?${yearParams}&${divisionParams}&${offenceParams}
       .then(res => res.json())
       .then(data => setTableData(data));
   }
