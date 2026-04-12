@@ -44,11 +44,11 @@ The goal is to create a transparent, accessible, and decision-support tool that 
 
 ```mermaid
 flowchart LR
-    A[RBPF Crime Reports (PDF/Docs)] --> B[Data Extraction]
-    B --> C[Automated Cleaning & Normalization]
+    A[RBPF Crime Reports/PDFs] --> B[Data Extraction]
+    B --> C[Automated Cleaning and Normalization]
     C --> D[CSV Export]
     D --> E[Database Import]
-    E --> F[Frontend Map & Table UI] 
+    E --> F[Frontend Map and Table UI]
 ```
 
 ---
