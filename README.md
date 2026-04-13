@@ -60,8 +60,8 @@ flowchart LR
 - **JavaScript** for dynamic UI interactions and React components
 - **CSS** for responsive styling and theme toggles
 - **Dockerfile** for containerization for consistent deployment environments
+- **SQL** database integration for structured crime datasets
 
-SQL — database integration for structured crime datasets
 ### Backend
 - **Python** for data cleaning and analysis
 - **Pandas / NumPy** for statistical and data processing
