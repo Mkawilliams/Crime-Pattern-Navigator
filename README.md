@@ -23,7 +23,7 @@ The goal is to create a transparent, accessible, and decision-support tool that 
 ---
 
 ## 🗂️ Data Sources
-- Royal Bahamas Police Force Annual Crime Reports (2019–2024)
+- Royal Bahamas Police Force Annual Crime Reports (2019–2025)
 - Official RBPF statistical releases
 - Subdivision boundary GeoJSON/shapefiles (for QGIS integration)
 
@@ -99,6 +99,7 @@ flowchart LR
 4. **Click-to-filter Comparison Table** allowing users to filter divisions quickly by clicking them.
 5. **Responsive design** coded for both mobile and desktop devices.
 6. **Dark/Light Map Themes** granting users two map themes. 
+7. **Loading Screen** allowing users to know when backend is loading.
 
 ---
 
