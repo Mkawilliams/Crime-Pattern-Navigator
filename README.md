@@ -99,7 +99,7 @@ flowchart LR
 4. **Click-to-filter Comparison Table** allowing users to filter divisions quickly by clicking them.
 5. **Responsive design** coded for both mobile and desktop devices.
 6. **Dark/Light Map Themes** granting users two map themes. 
-7. **Loading Screen** allowing users to know when backend is loading.
+7. **Loading Screen** allowing users to know when the backend is loading.
 
 ---
 
