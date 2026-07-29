@@ -36,4 +36,5 @@ for i in df[mask].index:
 df["Offence"] = df["Offence"].replace({"Shop breaking": "Shopbreaking"})
 
 # Save the cleaned data to a new CSV file
+print("Saving cleaned data to:", os.path.join(C_Data_DIR, "cleaned_np_crime_data.csv"))
 df.to_csv(os.path.join(C_Data_DIR, "cleaned_np_crime_data.csv"), index=False)

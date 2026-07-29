@@ -4,7 +4,7 @@ import sqlite3
 # This script connects to the SQLite database, creates a table for police subdivisions,
 # loads the geographical polygons from a GeoJSON file, and inserts the data into the database.
 # connect to database
-conn = sqlite3.connect("crime.db")
+conn = sqlite3.connect("backednd/crime.db")
 cur = conn.cursor()
 
 # Create table
@@ -15,7 +15,7 @@ cur.execute("""CREATE TABLE subdivision (
 )""")
 
 # Load GeoJSON data
-with open("backend/geo/Police Subdivisions.geojson") as f:
+with open("backend/geo/police_subdivisions.geojson") as f:
     data = json.load(f)
 
 # Insert data into database

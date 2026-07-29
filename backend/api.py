@@ -100,8 +100,8 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://frontend:3000",
-        "https://bahamas-crime-intelligence-map.vercel.app"
-        ],
+        "https://bahamas-crime-intelligence-map.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

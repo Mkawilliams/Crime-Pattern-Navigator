@@ -10,7 +10,7 @@ import folium
 # And creates a choropleth map using Folium. The map is saved as an HTML file and opened in the default web browser.
 
 # Connect to database
-conn = sqlite3.connect("crime.db")
+conn = sqlite3.connect("backend/crime.db")
 
 # Query crime totals by division
 df = pd.read_sql_query(

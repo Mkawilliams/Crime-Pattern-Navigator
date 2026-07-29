@@ -32,7 +32,7 @@ long_df = df.melt(
 long_df = long_df[long_df["crime_count"] > 0]
 
 # Connect to the SQLite database (or create it if it doesn't exist) and load the long format DataFrame into a table named "crime_data". If the table already exists, the new data will be appended to it.
-conn = sqlite3.connect("crime.db")
+conn = sqlite3.connect("backend/crime.db")
 
 long_df.to_sql("crime_data", conn, if_exists="append", index=False)
 
